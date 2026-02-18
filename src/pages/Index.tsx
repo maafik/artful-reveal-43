@@ -73,6 +73,8 @@ const PaintingCard = ({
   delay: number;
 }) => {
   const cardRef = useReveal();
+  const overlayRef = useRef<HTMLDivElement>(null);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -80,8 +82,6 @@ const PaintingCard = ({
     e.currentTarget.style.setProperty("--mx", `${x}%`);
     e.currentTarget.style.setProperty("--my", `${y}%`);
   }, []);
-
-  const overlayRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = useCallback(() => {
     if (overlayRef.current) overlayRef.current.style.opacity = "1";
@@ -232,29 +232,159 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
 
       {/* Masonry-ish grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-        {/* Row 1: landscape | square | portrait */}
-        <div className="lg:col-span-2 aspect-[16/9] cursor-none">
+        {/* Row 1: landscape | square */}
+        <div className="lg:col-span-2 aspect-[16/9]">
           <PaintingCard painting={PAINTINGS[1]} onClick={onSelect} delay={0} />
         </div>
-        <div className="aspect-square cursor-none">
+        <div className="aspect-square">
           <PaintingCard painting={PAINTINGS[0]} onClick={onSelect} delay={100} />
         </div>
 
-        {/* Row 2: portrait | landscape | landscape */}
-        <div className="aspect-square cursor-none">
+        {/* Row 2: square | landscape */}
+        <div className="aspect-square">
           <PaintingCard painting={PAINTINGS[4]} onClick={onSelect} delay={200} />
         </div>
-        <div className="lg:col-span-2 aspect-[16/9] cursor-none">
+        <div className="lg:col-span-2 aspect-[16/9]">
           <PaintingCard painting={PAINTINGS[3]} onClick={onSelect} delay={300} />
         </div>
 
-        {/* Row 3: full-width */}
-        <div className="aspect-[16/9] cursor-none">
+        {/* Row 3 */}
+        <div className="aspect-[16/9]">
           <PaintingCard painting={PAINTINGS[2]} onClick={onSelect} delay={400} />
         </div>
-        <div className="aspect-[16/9] cursor-none">
+        <div className="aspect-[16/9]">
           <PaintingCard painting={PAINTINGS[5]} onClick={onSelect} delay={500} />
         </div>
+      </div>
+    </section>
+  );
+};
+
+// Single review card — separate component to safely use hooks
+const ReviewCard = ({
+  name,
+  city,
+  text,
+  painting,
+  paintingTitle,
+  delay,
+}: {
+  name: string;
+  city: string;
+  text: string;
+  painting: string;
+  paintingTitle: string;
+  delay: number;
+}) => {
+  const ref = useReveal();
+  return (
+    <div
+      ref={ref}
+      className="reveal flex flex-col gap-6"
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {/* Painting thumbnail */}
+      <div className="painting-frame overflow-hidden" style={{ aspectRatio: "4/3" }}>
+        <img
+          src={painting}
+          alt={paintingTitle}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Review text */}
+      <div>
+        <p
+          className="text-xs tracking-widest uppercase mb-3"
+          style={{ color: "hsl(var(--gold))", fontFamily: "Jost, sans-serif" }}
+        >
+          {paintingTitle}
+        </p>
+        <p
+          className="leading-loose mb-5 italic"
+          style={{
+            fontFamily: "Playfair Display, serif",
+            color: "hsl(var(--foreground))",
+            fontSize: "0.95rem",
+          }}
+        >
+          «{text}»
+        </p>
+        <div className="flex items-center gap-3">
+          <div className="w-px h-6" style={{ background: "hsl(var(--gold))" }} />
+          <div>
+            <p
+              className="text-sm"
+              style={{ fontFamily: "Jost, sans-serif", color: "hsl(var(--foreground))", fontWeight: 400 }}
+            >
+              {name}
+            </p>
+            <p
+              className="text-xs"
+              style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif" }}
+            >
+              {city}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const REVIEWS = [
+  {
+    name: "Анна М.",
+    city: "Москва",
+    text: "Картина превзошла все ожидания. Живая, тёплая, наполненная светом. Теперь это центр нашей гостиной.",
+    painting: painting1,
+    paintingTitle: "Золотой горизонт",
+  },
+  {
+    name: "Дмитрий В.",
+    city: "Санкт-Петербург",
+    text: "Удивительная работа. Текстура масла чувствуется даже на фото. Получил в подарок жене — она была в восторге.",
+    painting: painting3,
+    paintingTitle: "Прибой",
+  },
+  {
+    name: "Елена К.",
+    city: "Екатеринбург",
+    text: "Давно искала что-то особенное для кабинета. Эта работа именно то — спокойная и при этом живая.",
+    painting: painting5,
+    paintingTitle: "Горный туман",
+  },
+];
+
+// Reviews section
+const Reviews = () => {
+  const ref = useReveal();
+  return (
+    <section className="px-8 md:px-20 lg:px-32 py-32 border-t" style={{ borderColor: "hsl(var(--border))" }}>
+      <div ref={ref} className="reveal mb-20 text-center">
+        <p
+          className="mb-3 text-xs tracking-widest uppercase"
+          style={{ color: "hsl(var(--gold))", fontFamily: "Jost, sans-serif" }}
+        >
+          Отзывы
+        </p>
+        <h2
+          className="text-4xl md:text-5xl"
+          style={{ fontFamily: "Playfair Display, serif" }}
+        >
+          Говорят коллекционеры
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
+        {REVIEWS.map((review, i) => (
+          <ReviewCard
+            key={i}
+            {...review}
+            delay={i * 120}
+          />
+        ))}
       </div>
     </section>
   );
@@ -353,6 +483,7 @@ const Index = () => {
       <main>
         <Hero />
         <Gallery onSelect={setSelected} />
+        <Reviews />
         <About />
       </main>
 
