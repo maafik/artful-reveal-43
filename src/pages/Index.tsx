@@ -93,7 +93,7 @@ const PaintingCard = ({
   return (
     <div
       ref={cardRef}
-      className="reveal painting-card painting-frame cursor-none overflow-hidden"
+      className="reveal painting-card painting-frame cursor-none overflow-hidden w-full h-full"
       style={{ transitionDelay: `${delay}ms` }}
       onClick={() => onClick(painting)}
       onMouseMove={handleMouseMove}
