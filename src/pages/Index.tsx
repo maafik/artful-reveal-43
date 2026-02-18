@@ -72,6 +72,7 @@ const PaintingCard = ({
   onClick: (p: Painting) => void;
   delay: number;
 }) => {
+  const cardRef = useReveal();
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -91,8 +92,9 @@ const PaintingCard = ({
 
   return (
     <div
+      ref={cardRef}
       className="reveal painting-card painting-frame cursor-none overflow-hidden"
-      style={{ transitionDelay: `${delay * 0.6}ms` }}
+      style={{ transitionDelay: `${delay}ms` }}
       onClick={() => onClick(painting)}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
