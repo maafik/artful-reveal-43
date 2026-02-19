@@ -265,7 +265,7 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {/* Row 1 */}
         <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[1])}>
-          <div className="overflow-hidden rounded-sm bg-gray-100">
+          <div className="overflow-hidden rounded-sm bg-white">
             <img
               src={PAINTINGS[1].image}
               alt={PAINTINGS[1].title}
@@ -282,7 +282,7 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
         </div>
 
         <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[0])}>
-          <div className="overflow-hidden rounded-sm bg-gray-100">
+          <div className="overflow-hidden rounded-sm bg-white">
             <img
               src={PAINTINGS[0].image}
               alt={PAINTINGS[0].title}
@@ -300,7 +300,7 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
 
         {/* Row 2 */}
         <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[4])}>
-          <div className="overflow-hidden rounded-sm bg-gray-100">
+          <div className="overflow-hidden rounded-sm bg-white">
             <img
               src={PAINTINGS[4].image}
               alt={PAINTINGS[4].title}
@@ -317,7 +317,7 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
         </div>
 
         <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[3])}>
-          <div className="overflow-hidden rounded-sm bg-gray-100">
+          <div className="overflow-hidden rounded-sm bg-white">
             <img
               src={PAINTINGS[3].image}
               alt={PAINTINGS[3].title}
@@ -335,7 +335,7 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
 
         {/* Row 3 */}
         <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[2])}>
-          <div className="overflow-hidden rounded-sm bg-gray-100">
+          <div className="overflow-hidden rounded-sm bg-white">
             <img
               src={PAINTINGS[2].image}
               alt={PAINTINGS[2].title}
@@ -353,7 +353,7 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
 
         {/* Row 4 */}
         <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[5])}>
-          <div className="overflow-hidden rounded-sm bg-gray-100">
+          <div className="overflow-hidden rounded-sm bg-white">
             <img
               src={PAINTINGS[5].image}
               alt={PAINTINGS[5].title}
@@ -370,7 +370,7 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
         </div>
 
         <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[6])}>
-          <div className="overflow-hidden rounded-sm bg-gray-100">
+          <div className="overflow-hidden rounded-sm bg-white">
             <img
               src={PAINTINGS[6].image}
               alt={PAINTINGS[6].title}
