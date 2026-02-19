@@ -261,35 +261,129 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
         </p>
       </div>
 
-      {/* Masonry-ish grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-        {/* Row 1: landscape | square */}
-        <div className="lg:col-span-2 aspect-[16/9]">
-          <PaintingCard painting={PAINTINGS[1]} onClick={onSelect} delay={0} />
-        </div>
-        <div className="aspect-square">
-          <PaintingCard painting={PAINTINGS[0]} onClick={onSelect} delay={100} />
+      {/* Masonry grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Row 1 */}
+        <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[1])}>
+          <div className="overflow-hidden rounded-sm bg-gray-100">
+            <img
+              src={PAINTINGS[1].image}
+              alt={PAINTINGS[1].title}
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+            <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {PAINTINGS[1].title}
+            </p>
+          </div>
         </div>
 
-        {/* Row 2: square | landscape */}
-        <div className="aspect-square">
-          <PaintingCard painting={PAINTINGS[4]} onClick={onSelect} delay={200} />
-        </div>
-        <div className="lg:col-span-2 aspect-[16/9]">
-          <PaintingCard painting={PAINTINGS[3]} onClick={onSelect} delay={300} />
+        <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[0])}>
+          <div className="overflow-hidden rounded-sm bg-gray-100">
+            <img
+              src={PAINTINGS[0].image}
+              alt={PAINTINGS[0].title}
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+            <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {PAINTINGS[0].title}
+            </p>
+          </div>
         </div>
 
-        {/* Row 3: full width */}
-        <div className="lg:col-span-2 aspect-[16/9]">
-          <PaintingCard painting={PAINTINGS[2]} onClick={onSelect} delay={400} />
+        {/* Row 2 */}
+        <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[4])}>
+          <div className="overflow-hidden rounded-sm bg-gray-100">
+            <img
+              src={PAINTINGS[4].image}
+              alt={PAINTINGS[4].title}
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+            <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {PAINTINGS[4].title}
+            </p>
+          </div>
+        </div>
+
+        <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[3])}>
+          <div className="overflow-hidden rounded-sm bg-gray-100">
+            <img
+              src={PAINTINGS[3].image}
+              alt={PAINTINGS[3].title}
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+            <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {PAINTINGS[3].title}
+            </p>
+          </div>
+        </div>
+
+        {/* Row 3 */}
+        <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[2])}>
+          <div className="overflow-hidden rounded-sm bg-gray-100">
+            <img
+              src={PAINTINGS[2].image}
+              alt={PAINTINGS[2].title}
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+            <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {PAINTINGS[2].title}
+            </p>
+          </div>
         </div>
 
         {/* Row 4 */}
-        <div className="aspect-[16/9]">
-          <PaintingCard painting={PAINTINGS[5]} onClick={onSelect} delay={500} />
+        <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[5])}>
+          <div className="overflow-hidden rounded-sm bg-gray-100">
+            <img
+              src={PAINTINGS[5].image}
+              alt={PAINTINGS[5].title}
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+            <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {PAINTINGS[5].title}
+            </p>
+          </div>
         </div>
-        <div className="aspect-[16/9]">
-          <PaintingCard painting={PAINTINGS[6]} onClick={onSelect} delay={600} />
+
+        <div className="relative group cursor-pointer" onClick={() => onSelect(PAINTINGS[6])}>
+          <div className="overflow-hidden rounded-sm bg-gray-100">
+            <img
+              src={PAINTINGS[6].image}
+              alt={PAINTINGS[6].title}
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+            <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {PAINTINGS[6].title}
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -520,7 +614,7 @@ const Footer = () => (
       className="text-xs tracking-widest uppercase"
       style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif" }}
     >
-      © 2025 — irina-sketch
+      © 2026 — irina-sketch
     </p>
     <p
       className="text-xs"
