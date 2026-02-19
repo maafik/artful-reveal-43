@@ -414,11 +414,14 @@ const ReviewCard = ({
       style={{ transitionDelay: `${delay}ms` }}
     >
       {/* Painting thumbnail */}
-      <div className="painting-frame overflow-hidden" style={{ aspectRatio: "4/3" }}>
+      <div
+        className="painting-frame overflow-hidden"
+        style={{ aspectRatio: "4/3", background: "hsl(40 25% 98%)" }}
+      >
         <img
           src={painting}
           alt={paintingTitle}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           loading="lazy"
         />
       </div>
@@ -468,21 +471,21 @@ const REVIEWS = [
     name: "Анна М.",
     city: "Москва",
     text: "Картина превзошла все ожидания. Живая, тёплая, наполненная светом. Теперь это центр нашей гостиной.",
-    painting: originalPainting1,
+    painting: "/8.png",
     paintingTitle: "Золотой горизонт",
   },
   {
     name: "Дмитрий В.",
     city: "Санкт-Петербург",
     text: "Удивительная работа. Текстура масла чувствуется даже на фото. Получил в подарок жене — она была в восторге.",
-    painting: originalPainting3,
+    painting: "/9.png",
     paintingTitle: "Прибой",
   },
   {
     name: "Елена К.",
     city: "Екатеринбург",
     text: "Давно искала что-то особенное для кабинета. Эта работа именно то — спокойная и при этом живая.",
-    painting: originalPainting5,
+    painting: "/10.png",
     paintingTitle: "Горный туман",
   },
 ];
@@ -491,7 +494,7 @@ const REVIEWS = [
 const Reviews = () => {
   const ref = useReveal();
   return (
-    <section className="px-8 md:px-20 lg:px-32 py-32 border-t" style={{ borderColor: "hsl(var(--border))" }}>
+    <section id="reviews" className="px-8 md:px-20 lg:px-32 py-32 border-t" style={{ borderColor: "hsl(var(--border))" }}>
       <div ref={ref} className="reveal mb-20 text-center">
         <p
           className="mb-3 text-xs tracking-widest uppercase"
@@ -633,17 +636,18 @@ const Index = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      const el = document.getElementById("gallery");
-      if (!el) {
+      const reviewsEl = document.getElementById("reviews");
+      if (!reviewsEl) {
         setShowBackToGallery(false);
         return;
       }
 
-      const rect = el.getBoundingClientRect();
+      const rect = reviewsEl.getBoundingClientRect();
       setShowBackToGallery(rect.top < 0);
     };
 
     window.addEventListener("scroll", onScroll);
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
