@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, Play } from "lucide-react";
+import { X, Play, Send } from "lucide-react";
 
 interface Painting {
   id: number;
@@ -8,14 +8,17 @@ interface Painting {
   image: string;
   videoUrl: string;
   size: "portrait" | "landscape" | "square";
+  price: number;
+  oldPrice: number;
 }
 
 interface PaintingModalProps {
   painting: Painting | null;
   onClose: () => void;
+  onOrder?: () => void;
 }
 
-const PaintingModal = ({ painting, onClose }: PaintingModalProps) => {
+const PaintingModal = ({ painting, onClose, onOrder }: PaintingModalProps) => {
   const [playing, setPlaying] = useState(false);
   const backdropRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +39,7 @@ const PaintingModal = ({ painting, onClose }: PaintingModalProps) => {
   return (
     <div
       ref={backdropRef}
-      className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+      className="modal-backdrop fixed inset-0 z-50 flex items-start md:items-center justify-center p-4 md:p-8"
       style={{ background: "hsl(30 15% 10% / 0.75)", backdropFilter: "blur(12px)" }}
       onClick={(e) => e.target === backdropRef.current && onClose()}
     >
@@ -45,6 +48,7 @@ const PaintingModal = ({ painting, onClose }: PaintingModalProps) => {
         style={{
           background: "hsl(40 25% 98%)",
           boxShadow: "0 40px 120px -20px hsl(30 20% 5% / 0.6)",
+          maxHeight: "90vh",
         }}
       >
         {/* Close */}
@@ -59,7 +63,7 @@ const PaintingModal = ({ painting, onClose }: PaintingModalProps) => {
           <X size={16} />
         </button>
 
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row overflow-y-auto" style={{ maxHeight: "90vh" }}>
           {/* Video side */}
           <div className="relative md:w-[56%] aspect-square md:aspect-auto md:min-h-[480px] overflow-hidden bg-charcoal flex-shrink-0">
             {!playing ? (
@@ -100,11 +104,11 @@ const PaintingModal = ({ painting, onClose }: PaintingModalProps) => {
                 </div>
               </>
             ) : (
-              <iframe
+              <video
                 src={painting.videoUrl}
-                className="w-full h-full"
-                allow="autoplay; fullscreen"
-                allowFullScreen
+                className="w-full h-full object-cover"
+                controls
+                autoPlay
                 title={`${painting.title} — процесс`}
               />
             )}
@@ -134,8 +138,8 @@ const PaintingModal = ({ painting, onClose }: PaintingModalProps) => {
 
               {/* Price */}
               <div className="mb-10">
-                <p className="price-old text-sm mb-1">16&nbsp;899 ₽</p>
-                <p className="price-new text-4xl">9&nbsp;900 ₽</p>
+                <p className="price-old text-sm mb-1">{painting.oldPrice.toLocaleString('ru-RU')} ₽</p>
+                <p className="price-new text-4xl">{painting.price.toLocaleString('ru-RU')} ₽</p>
               </div>
             </div>
 
@@ -156,6 +160,7 @@ const PaintingModal = ({ painting, onClose }: PaintingModalProps) => {
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--primary))";
                 }}
+                onClick={onOrder}
               >
                 Заказать картину
               </button>

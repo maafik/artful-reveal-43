@@ -1,64 +1,95 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import CustomCursor from "@/components/CustomCursor";
 import PaintingModal, { Painting } from "@/components/PaintingModal";
 import useReveal from "@/hooks/useReveal";
+import { ArrowUp, X, Send } from "lucide-react";
 
-import painting1 from "@/assets/painting-1.jpg";
-import painting2 from "@/assets/painting-2.jpg";
-import painting3 from "@/assets/painting-3.jpg";
-import painting4 from "@/assets/painting-4.jpg";
-import painting5 from "@/assets/painting-5.jpg";
-import painting6 from "@/assets/painting-6.jpg";
+import painting1 from "@/assets/painting-1-new.png";
+import originalPainting1 from "@/assets/painting-1.jpg";
+import originalPainting2 from "@/assets/painting-2.jpg";
+import painting2 from "@/assets/painting-2-new.png";
+import originalPainting3 from "@/assets/painting-3.jpg";
+import painting3 from "@/assets/painting-3-new.png";
+import originalPainting4 from "@/assets/painting-4.jpg";
+import painting4 from "@/assets/painting-4-new.png";
+import originalPainting5 from "@/assets/painting-5.jpg";
+import painting5 from "@/assets/painting-5-new.png";
+import originalPainting6 from "@/assets/painting-6.jpg";
+import painting6 from "@/assets/painting-6-new.png";
+import painting7 from "@/assets/painting-7-new.png";
+import image888 from "@/assets/888.jpg";
 import heroPainting from "@/assets/hero-painting.jpg";
 
 const PAINTINGS: Painting[] = [
   {
     id: 1,
-    title: "Золотой горизонт",
-    description: "Пространство между небом и землёй, где свет становится материей. Масло, золотая фольга на холсте. 80×80 см.",
+    title: "Рождение света",
+    description: "Абстрактный образ, словно энергия или душа проявляется из тьмы",
     image: painting1,
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    videoUrl: "/1.mp4",
     size: "square",
+    price: 12999,
+    oldPrice: 18999,
   },
   {
     id: 2,
-    title: "Белый сад",
-    description: "Цветение как внутреннее состояние. Акрил, масло на холсте. 60×80 см.",
+    title: "Гнев неба",
+    description: "Драматическое небо над водой, предчувствие бури",
     image: painting2,
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    videoUrl: "/2.mp4",
     size: "landscape",
+    price: 15999,
+    oldPrice: 22999,
   },
   {
     id: 3,
-    title: "Прибой",
-    description: "Волна, застывшая в золотом мгновении. Масло, золотая патина. 70×70 см.",
+    title: "Порог между мирами",
+    description: "Лес и тёмный проход как переход в иное измерение",
     image: painting3,
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    videoUrl: "/3.mp4",
     size: "square",
+    price: 9900,
+    oldPrice: 14900,
   },
   {
     id: 4,
-    title: "Туманный лес",
-    description: "Лес на рассвете — место между сном и явью. Масло на холсте. 100×80 см.",
+    title: "Шёпот древнего леса",
+    description: "Лицо, растворённое в стволах — дух леса",
     image: painting4,
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    videoUrl: "/4.mp4",
     size: "landscape",
+    price: 15999,
+    oldPrice: 21999,
   },
   {
     id: 5,
-    title: "Горный туман",
-    description: "Молчание гор. Смешанная техника, холст. 60×60 см.",
+    title: "Пылающая тишина",
+    description: "Огненная пустыня на закате, одиночество и масштаб",
     image: painting5,
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    videoUrl: "/5.mp4",
     size: "square",
+    price: 13999,
+    oldPrice: 19999,
   },
   {
     id: 6,
-    title: "Дюны",
-    description: "Ритм песчаных волн под вечерним светом. Масло на холсте. 90×60 см.",
+    title: "Золотая роща",
+    description: "Живой, мерцающий свет в переплетении деревьев",
     image: painting6,
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    videoUrl: "/6.mp4",
     size: "landscape",
+    price: 9900,
+    oldPrice: 14900,
+  },
+  {
+    id: 7,
+    title: "Страж огня и воды",
+    description: "Фигура из стихий — соединение пламени и потока",
+    image: painting7,
+    videoUrl: "/7.mp4",
+    size: "landscape",
+    price: 12999,
+    oldPrice: 18999,
   },
 ];
 
@@ -248,12 +279,17 @@ const Gallery = ({ onSelect }: { onSelect: (p: Painting) => void }) => {
           <PaintingCard painting={PAINTINGS[3]} onClick={onSelect} delay={300} />
         </div>
 
-        {/* Row 3 */}
-        <div className="aspect-[16/9]">
+        {/* Row 3: full width */}
+        <div className="lg:col-span-2 aspect-[16/9]">
           <PaintingCard painting={PAINTINGS[2]} onClick={onSelect} delay={400} />
         </div>
+
+        {/* Row 4 */}
         <div className="aspect-[16/9]">
           <PaintingCard painting={PAINTINGS[5]} onClick={onSelect} delay={500} />
+        </div>
+        <div className="aspect-[16/9]">
+          <PaintingCard painting={PAINTINGS[6]} onClick={onSelect} delay={600} />
         </div>
       </div>
     </section>
@@ -338,21 +374,21 @@ const REVIEWS = [
     name: "Анна М.",
     city: "Москва",
     text: "Картина превзошла все ожидания. Живая, тёплая, наполненная светом. Теперь это центр нашей гостиной.",
-    painting: painting1,
+    painting: originalPainting1,
     paintingTitle: "Золотой горизонт",
   },
   {
     name: "Дмитрий В.",
     city: "Санкт-Петербург",
     text: "Удивительная работа. Текстура масла чувствуется даже на фото. Получил в подарок жене — она была в восторге.",
-    painting: painting3,
+    painting: originalPainting3,
     paintingTitle: "Прибой",
   },
   {
     name: "Елена К.",
     city: "Екатеринбург",
     text: "Давно искала что-то особенное для кабинета. Эта работа именно то — спокойная и при этом живая.",
-    painting: painting5,
+    painting: originalPainting5,
     paintingTitle: "Горный туман",
   },
 ];
@@ -391,10 +427,10 @@ const Reviews = () => {
 };
 
 // About section
-const About = () => {
+const About = ({ onConsultation }: { onConsultation: () => void }) => {
   const ref = useReveal();
   return (
-    <section className="px-8 md:px-20 lg:px-32 py-32 border-t" style={{ borderColor: "hsl(var(--border))" }}>
+    <section id="about" className="px-8 md:px-20 lg:px-32 py-32 border-t" style={{ borderColor: "hsl(var(--border))" }}>
       <div ref={ref} className="reveal max-w-2xl mx-auto text-center">
         <p
           className="mb-6 text-xs tracking-widest uppercase"
@@ -409,13 +445,65 @@ const About = () => {
           Живопись как диалог
         </h2>
         <p
-          className="leading-loose"
+          className="leading-loose mb-6"
           style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif", fontWeight: 300 }}
         >
+          Художник русского происхождения, в творчестве соединяет традиции русской живописи с современными техниками.
           Каждая картина рождается медленно — в тишине, из текстур и случайностей.
           Работы созданы в смешанной технике: масло, акрил, золотая фольга.
           Все работы — в единственном экземпляре.
         </p>
+        <div className="flex justify-center mb-8">
+          <img
+            src={image888}
+            alt="888"
+            className="max-w-full h-auto"
+            style={{ maxHeight: "180px" }}
+          />
+        </div>
+        
+        {/* Consultation Block */}
+        <div
+          className="p-6 rounded-sm"
+          style={{
+            background: "hsl(40 25% 98%)",
+            border: "1px solid hsl(var(--border))",
+          }}
+        >
+          <p
+            className="mb-4 text-lg font-medium"
+            style={{ color: "hsl(var(--foreground))", fontFamily: "Playfair Display, serif" }}
+          >
+            Нужна консультация?
+          </p>
+          <p
+            className="mb-6 text-sm"
+            style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif" }}
+          >
+            Помогу подобрать идеальную картину для вашего интерьера
+          </p>
+          <div className="flex justify-center">
+            <button
+              onClick={onConsultation}
+              className="px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300"
+              style={{
+                background: "hsl(var(--primary))",
+                color: "hsl(var(--primary-foreground))",
+                fontFamily: "Jost, sans-serif",
+                fontWeight: 400,
+                letterSpacing: "0.15em",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--gold))";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--primary))";
+              }}
+            >
+              Заказать звонок
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -424,6 +512,7 @@ const About = () => {
 // Footer
 const Footer = () => (
   <footer
+    id="contact"
     className="px-8 md:px-20 lg:px-32 py-12 flex flex-col md:flex-row items-center justify-between gap-4"
     style={{ borderTop: "1px solid hsl(var(--border))" }}
   >
@@ -431,7 +520,7 @@ const Footer = () => (
       className="text-xs tracking-widest uppercase"
       style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif" }}
     >
-      © 2024 — Авторская живопись
+      © 2025 — irina-sketch
     </p>
     <p
       className="text-xs"
@@ -444,6 +533,34 @@ const Footer = () => (
 
 const Index = () => {
   const [selected, setSelected] = useState<Painting | null>(null);
+  const [showBackToGallery, setShowBackToGallery] = useState(false);
+  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [showConsultationModal, setShowConsultationModal] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.getElementById("gallery");
+      if (!el) {
+        setShowBackToGallery(false);
+        return;
+      }
+
+      const rect = el.getBoundingClientRect();
+      setShowBackToGallery(rect.top < 0);
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Show consultation modal after 30 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowConsultationModal(true);
+    }, 30000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -462,19 +579,23 @@ const Index = () => {
           className="text-xl"
           style={{ fontFamily: "Playfair Display, serif", color: "hsl(var(--foreground))" }}
         >
-          Artefact
+          irina-sketch
         </span>
         <nav className="hidden md:flex items-center gap-10">
-          {["Галерея", "О художнике", "Контакт"].map((item) => (
+          {[
+            { label: "Галерея", href: "#gallery" },
+            { label: "О художнике", href: "#about" },
+            { label: "Контакт", href: "#contact" }
+          ].map((item) => (
             <a
-              key={item}
-              href="#gallery"
+              key={item.label}
+              href={item.href}
               className="text-xs tracking-widest uppercase transition-colors duration-200"
               style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif" }}
               onMouseEnter={(e) => ((e.target as HTMLAnchorElement).style.color = "hsl(var(--gold))")}
               onMouseLeave={(e) => ((e.target as HTMLAnchorElement).style.color = "hsl(var(--muted-foreground))")}
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>
@@ -484,12 +605,251 @@ const Index = () => {
         <Hero />
         <Gallery onSelect={setSelected} />
         <Reviews />
-        <About />
+        <About onConsultation={() => setShowConsultationModal(true)} />
       </main>
 
       <Footer />
 
-      <PaintingModal painting={selected} onClose={() => setSelected(null)} />
+      <PaintingModal painting={selected} onClose={() => setSelected(null)} onOrder={() => setShowOrderModal(true)} />
+
+      {/* Order Modal */}
+      {showOrderModal && selected && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "hsl(30 15% 10% / 0.75)", backdropFilter: "blur(12px)" }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowOrderModal(false);
+          }}
+        >
+          <div
+            className="relative w-full max-w-md rounded-sm p-6"
+            style={{
+              background: "hsl(40 25% 98%)",
+              boxShadow: "0 40px 120px -20px hsl(30 20% 5% / 0.6)",
+            }}
+          >
+            {/* Close */}
+            <button
+              onClick={() => setShowOrderModal(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200"
+              style={{
+                background: "hsl(40 15% 90%)",
+                color: "hsl(var(--foreground))",
+              }}
+            >
+              <X size={14} />
+            </button>
+
+            {/* Content */}
+            <div className="text-center">
+              <p
+                className="mb-4 text-sm"
+                style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif" }}
+              >
+                Заказ будет оформлен в Telegram
+              </p>
+              
+              <p
+                className="mb-6 text-lg font-medium"
+                style={{ color: "hsl(var(--foreground))", fontFamily: "Playfair Display, serif" }}
+              >
+                {selected.title}
+              </p>
+              
+              <p
+                className="mb-8 text-2xl"
+                style={{ color: "hsl(var(--gold))", fontFamily: "Playfair Display, serif" }}
+              >
+                {selected.price.toLocaleString('ru-RU')} ₽
+              </p>
+
+              {/* Buttons */}
+              <div className="space-y-3">
+                <a
+                  href={`https://t.me/Irinasketchs?text=${encodeURIComponent(`Хочу заказать картину "${selected.title}" за ${selected.price.toLocaleString('ru-RU')} ₽`)}&`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 text-sm tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-3"
+                  style={{
+                    background: "hsl(var(--primary))",
+                    color: "hsl(var(--primary-foreground))",
+                    fontFamily: "Jost, sans-serif",
+                    fontWeight: 400,
+                    letterSpacing: "0.15em",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.background = "hsl(var(--gold))";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.background = "hsl(var(--primary))";
+                  }}
+                >
+                  <Send size={20} />
+                  Перейти в Telegram
+                </a>
+                
+                <button
+                  onClick={() => setShowOrderModal(false)}
+                  className="w-full py-3 text-xs tracking-widest uppercase transition-colors duration-200"
+                  style={{
+                    color: "hsl(var(--muted-foreground))",
+                    fontFamily: "Jost, sans-serif",
+                    background: "transparent",
+                    border: "1px solid hsl(var(--border))",
+                  }}
+                >
+                  Смотреть другие картины
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Consultation Modal */}
+      {showConsultationModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "hsl(30 15% 10% / 0.75)", backdropFilter: "blur(12px)" }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowConsultationModal(false);
+          }}
+        >
+          <div
+            className="relative w-full max-w-md rounded-sm p-6"
+            style={{
+              background: "hsl(40 25% 98%)",
+              boxShadow: "0 40px 120px -20px hsl(30 20% 5% / 0.6)",
+            }}
+          >
+            {/* Close */}
+            <button
+              onClick={() => setShowConsultationModal(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200"
+              style={{
+                background: "hsl(40 15% 90%)",
+                color: "hsl(var(--foreground))",
+              }}
+            >
+              <X size={14} />
+            </button>
+
+            {/* Content */}
+            <div className="text-center">
+              <p
+                className="mb-6 text-lg font-medium"
+                style={{ color: "hsl(var(--foreground))", fontFamily: "Playfair Display, serif" }}
+              >
+                Нужна консультация?
+              </p>
+              
+              <p
+                className="mb-8 text-sm"
+                style={{ color: "hsl(var(--muted-foreground))", fontFamily: "Jost, sans-serif" }}
+              >
+                Оставьте ваш номер телефона, и мы свяжемся с вами для бесплатной консультации по выбору картины
+              </p>
+
+              {/* Phone Input */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  const phone = formData.get('phone') as string;
+                  
+                  // Send to Telegram bot
+                  const botToken = '8259369712:AAGW6-aQ8Nw7fDnjBWuFDWIRnORL8dZ2zsM';
+                  const chatId = '1076512275';
+                  const message = `📞 Запрос на консультацию\n📱 Телефон: ${phone}\n🌐 Время: ${new Date().toLocaleString('ru-RU')}`;
+                  
+                  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      chat_id: chatId,
+                      text: message,
+                    }),
+                  });
+                  
+                  setShowConsultationModal(false);
+                }}
+                className="space-y-4"
+              >
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="+7 (___) ___-__-__"
+                  required
+                  className="w-full px-4 py-3 text-sm border rounded-sm"
+                  style={{
+                    borderColor: "hsl(var(--border))",
+                    background: "hsl(40 25% 98%)",
+                    color: "hsl(var(--foreground))",
+                    fontFamily: "Jost, sans-serif",
+                  }}
+                />
+                
+                <div className="space-y-3">
+                  <button
+                    type="submit"
+                    className="w-full py-3 text-sm tracking-widest uppercase transition-all duration-300"
+                    style={{
+                      background: "hsl(var(--primary))",
+                      color: "hsl(var(--primary-foreground))",
+                      fontFamily: "Jost, sans-serif",
+                      fontWeight: 400,
+                      letterSpacing: "0.15em",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--gold))";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--primary))";
+                    }}
+                  >
+                    Отправить
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={() => setShowConsultationModal(false)}
+                    className="w-full py-3 text-xs tracking-widest uppercase transition-colors duration-200"
+                    style={{
+                      color: "hsl(var(--muted-foreground))",
+                      fontFamily: "Jost, sans-serif",
+                      background: "transparent",
+                      border: "1px solid hsl(var(--border))",
+                    }}
+                  >
+                    Нет, спасибо
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showBackToGallery && (
+        <button
+          type="button"
+          aria-label="Вернуться к галерее"
+          className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-opacity"
+          style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+          onClick={() => {
+            const el = document.getElementById("gallery");
+            el?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+        >
+          <ArrowUp size={18} />
+        </button>
+      )}
     </div>
   );
 };
